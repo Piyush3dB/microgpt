@@ -4,6 +4,6 @@ get:
 run:
 	python3 microgpt.py
 
-loc:
+my:
 	python3 my_microgpt.py
 
