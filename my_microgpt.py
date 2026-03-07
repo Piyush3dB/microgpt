@@ -62,7 +62,7 @@ def matrix(nout, nin, std=0.08):
 ## Store the knowledge of the model
 state_dict = {}
 state_dict['wte']     = matrix(vocab_size, n_embd) # Word Token Embeddings
-state_dict['wpe']     = matrix(block_size, n_embd) # Positional Embeddings
+state_dict['wpe']     = matrix(block_size, n_embd) # Work Positional Embeddings
 state_dict['lm_head'] = matrix(vocab_size, n_embd) # Language Model Output Layer
 for i in range(n_layer):
     state_dict[f'layer{i}.attn_wq'] = matrix(n_embd, n_embd)
@@ -133,6 +133,9 @@ temperature = 0.5 # in (0, 1], control the "creativity" of generated text, low t
 print("\n--- inference (new, hallucinated names) ---")
 for sample_idx in range(20):
     keys, values = [[] for _ in range(n_layer)], [[] for _ in range(n_layer)]
+
+    pdb.set_trace()
+
     token_id = BOS
     sample = []
     for pos_id in range(block_size):
