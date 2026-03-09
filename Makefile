@@ -7,3 +7,5 @@ run:
 my:
 	python3 my_microgpt.py
 
+np:
+	python3 benchmark.py --backends numpy

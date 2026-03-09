@@ -90,10 +90,15 @@ def rmsnorm(x):
     return [xi * scale for xi in x]
 
 def gpt(token_id, pos_id, keys, values):
-    tok_emb = state_dict['wte'][token_id] # token embedding
-    pos_emb = state_dict['wpe'][pos_id] # position embedding
+
+
+    tok_emb = state_dict['wte'][token_id] # look-up token embedding
+    pos_emb = state_dict['wpe'][pos_id]   # look-up position embedding
     x = [t + p for t, p in zip(tok_emb, pos_emb)] # joint token and position embedding
     x = rmsnorm(x) # note: not redundant due to backward pass via the residual connection
+
+    pdb.set_trace()
+
 
     for li in range(n_layer):
         # 1) Multi-head Attention block
@@ -102,6 +107,9 @@ def gpt(token_id, pos_id, keys, values):
         q = linear(x, state_dict[f'layer{li}.attn_wq'])
         k = linear(x, state_dict[f'layer{li}.attn_wk'])
         v = linear(x, state_dict[f'layer{li}.attn_wv'])
+
+        pdb.set_trace()
+
         keys[li].append(k)
         values[li].append(v)
         x_attn = []
@@ -132,9 +140,11 @@ def gpt(token_id, pos_id, keys, values):
 temperature = 0.5 # in (0, 1], control the "creativity" of generated text, low to high
 print("\n--- inference (new, hallucinated names) ---")
 for sample_idx in range(20):
+
+    # KV Cache
     keys, values = [[] for _ in range(n_layer)], [[] for _ in range(n_layer)]
 
-    pdb.set_trace()
+    #pdb.set_trace()
 
     token_id = BOS
     sample = []
